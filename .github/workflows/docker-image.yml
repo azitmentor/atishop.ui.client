@@ -25,14 +25,15 @@ jobs:
 #       uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-#       - name: Build and push
-#         uses: docker/build-push-action@v3
-#         with:
-# #          context: ./sampleapp
-# #          platforms: linux/amd64,linux/arm64
-#           push: true
-#           tags: azitmentor/atishop.ui.client
-#      - run: sudo kubectl rollout restart deploy/atishopuiclient
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+#          context: ./sampleapp
+#          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: azitmentor/atishop.ui.client
+      - run: sudo kubectl apply -f deployment.yml
+      - run: sudo kubectl rollout restart deploy/atishopuiclient
       # - name: ActionKubeCtl Test
       #   uses: actions-hub/kubectl@master
       #   env:
@@ -47,11 +48,11 @@ jobs:
       #   with:
       #     args: get pods -A
 
-      - name: Verify deployment
-        uses: nickgronow/kubectl@master
-        with:
-          config_data: ${{ secrets.KCONFIG }}
-          args: '"get pods"'
+      # - name: Verify deployment
+      #   uses: nickgronow/kubectl@master
+      #   with:
+      #     config_data: ${{ secrets.KCONFIG }}
+      #     args: '"get pods"'
 
       # - name: Kubernetes deploy
       #   uses: actions-hub/kubectl@master
