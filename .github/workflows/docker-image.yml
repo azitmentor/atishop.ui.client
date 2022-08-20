@@ -33,13 +33,13 @@ jobs:
 #          platforms: linux/amd64,linux/arm64
           push: true
           tags: azitmentor/atishop.ui.client
-      - run: sudo kubectl get pods 
-      # - name: ActionKubeCtl Test
-      #   uses: actions-hub/kubectl@master
-      #   env:
-      #     KUBE_CONFIG: ${{ secrets.KCONFIG }}
-      #   with:
-      #     args: get pods            
+#      - run: sudo kubectl rollout restart deploy/atishopuiclient
+      - name: ActionKubeCtl Test
+        uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KCONFIG }}
+        with:
+          args: get pods            
 
       # - name: Kubernetes deploy
       #   uses: actions-hub/kubectl@master
