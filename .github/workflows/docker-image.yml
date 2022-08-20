@@ -33,7 +33,7 @@ jobs:
 #          platforms: linux/amd64,linux/arm64
           push: true
           tags: azitmentor/atishop.ui.client
-      - run: kubectl get pods 
+      - run: sudo kubectl get pods 
       # - name: ActionKubeCtl Test
       #   uses: actions-hub/kubectl@master
       #   env:
