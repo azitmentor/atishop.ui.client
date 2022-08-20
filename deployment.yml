@@ -1,0 +1,61 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: atishopuiclient
+  namespace: default
+  labels:
+    app: atishopuiclient
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: atishopuiclient
+  template:
+    metadata:
+      labels:
+        app: atishopuiclient
+    spec:
+      containers:
+        - name: atishopuiclient
+          image: azitmentor/atishopuiclient
+          imagePullPolicy: Always
+
+      restartPolicy: Always
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: atishopuiclient-service
+  namespace: default
+  labels:
+    app: atishopuiclient
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+  selector:
+    app: atishopuiclient
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: atishopuiclient-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+
+  rules:
+    - host: client.laky.ovh
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name:  atishopuiclient-service
+                port:
+                  number: 80
